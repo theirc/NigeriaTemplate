@@ -1,15 +1,13 @@
 import { AlgoliaSearchIndex } from '@ircsignpost/signpost-base/dist/src/search-common';
 import { LatLngExpression } from 'leaflet';
 
-export const SITE_TITLE = 'TODO';
+export const SITE_TITLE = 'Gidan Bayani';
 
 // TODO: add the country id of the instance to fetch the data from the cms for the service-map;
 export const COUNTRY_ID = 123;
 
 // TODO: add the default coords for the center of the map
-export const MAP_DEFAULT_COORDS: LatLngExpression = [
-  34.45830721078611, 65.09457416213823,
-];
+export const MAP_DEFAULT_COORDS: LatLngExpression = [9.082, 8.6753];
 
 // Cache statically generated pages for 1 hour. The timeout was chosen
 // arbitrarily. Our website has static, non-urgent resources, so we probably do
@@ -30,27 +28,25 @@ export const USE_CAT_SEC_ART_CONTENT_STRUCTURE = false;
 
 // A mapping from category ID to a Material icon for that category.
 export const CATEGORY_ICON_NAMES: { [key: string]: string } = {
-  /* TODO */
-  '123': 'home_work', // Placeholder
+  '13578153291293': 'home',
 };
 
 // A mapping from section ID to a Material icon for that section.
 export const SECTION_ICON_NAMES: { [key: string]: string } = {
-  /* TODO */
-  '123': 'home_work', // Placeholder
+  '14652026895901': 'description',
+  '14651890354077': 'shield',
 };
 
 // A list of category IDs that the site should not display.
-export const CATEGORIES_TO_HIDE: number[] = [
-  /* TODO */
-];
+export const CATEGORIES_TO_HIDE: number[] = [13578162616093, 13578145726749];
 
 // A map from a locale code to Zendesk locale id used for dynamic content translations.
 // https://developer.zendesk.com/api-reference/ticketing/account-configuration/locales/
 // Keep in sync with locales configured in /next.config.js.
 export const DYNAMIC_CONTENT_LOCALES: { [key: string]: number } = {
   'en-us': 1, // English locale id
-  // TODO: Add any other IDs needed
+  'hi-in': 1474,
+  kn: 1380,
 };
 
 export const ZENDESK_AUTH_HEADER = {
@@ -72,8 +68,9 @@ export const ALGOLIA_SEARCH_API_KEY = '0d9093280e7b2bc2b6ca12ed4180fd0a';
 
 // TODO: create Algolia indexes for Articles and Queries and replace the names here.
 // See README for more info on how to create indexes.
-export const ALGOLIA_ARTICLE_INDEX_NAME = 'TODO'; // TODO: replace article index name, e.g. 'zendesk_signpost-afghanistan_articles'.
-export const ALGOLIA_QUERY_INDEX_NAME = 'TODO'; // TODO: replace query index name, e.g. 'zendesk_signpost-afghanistan_articles_query_suggestions'.
+export const ALGOLIA_ARTICLE_INDEX_NAME = 'zendesk_signpost-nigeria_articles';
+export const ALGOLIA_QUERY_INDEX_NAME =
+  'zendesk_signpost-nigeria_articles_query_suggestions';
 
 export const SEARCH_BAR_INDEX: AlgoliaSearchIndex = {
   appId: ALGOLIA_SEARCH_APP_ID,
@@ -88,5 +85,5 @@ export const SEARCH_RESULTS_PAGE_INDEX: AlgoliaSearchIndex = {
 };
 
 export const DIRECTUS_AUTH_TOKEN = process.env.DIRECTUS_TOKEN ?? '';
-export const DIRECTUS_COUNTRY_ID = 0; // TODO: replace with the country ID from directus
-export const DIRECTUS_INSTANCE = ''; // TODO: add the url from the directus instance you want to fetch data from
+export const DIRECTUS_COUNTRY_ID = 27;
+export const DIRECTUS_INSTANCE = 'https://directus-irc.azurewebsites.net/';
