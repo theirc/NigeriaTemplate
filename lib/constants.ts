@@ -28,8 +28,7 @@ export const USE_CAT_SEC_ART_CONTENT_STRUCTURE = false;
 
 // A mapping from category ID to a Material icon for that category.
 export const CATEGORY_ICON_NAMES: { [key: string]: string } = {
-  '13578153291293': 'home',
-  '13578162616093': 'home',
+  '13578153291293': 'description',
 };
 
 // A mapping from section ID to a Material icon for that section.
@@ -45,9 +44,7 @@ export const CATEGORIES_TO_HIDE: number[] = [13578162616093, 13578145726749];
 // https://developer.zendesk.com/api-reference/ticketing/account-configuration/locales/
 // Keep in sync with locales configured in /next.config.js.
 export const DYNAMIC_CONTENT_LOCALES: { [key: string]: number } = {
-  'en-us': 1, // English locale id
-  ki: 1474, // kanuri
-  ha: 1380, // hausa
+  'en-us': 1,
 };
 
 export const ZENDESK_AUTH_HEADER = {
