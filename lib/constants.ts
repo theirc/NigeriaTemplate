@@ -17,7 +17,7 @@ export const REVALIDATION_TIMEOUT_SECONDS: number = 1 * 60 * 60;
 // The "about us" article ID.
 //
 // TODO
-export const ABOUT_US_ARTICLE_ID: number = 123;
+export const ABOUT_US_ARTICLE_ID: number = 13578602268317;
 
 // The information hierary of the website.
 // Set to true for the category -> section -> article hierarchy, similar to that of United for Ukraine.
@@ -29,6 +29,7 @@ export const USE_CAT_SEC_ART_CONTENT_STRUCTURE = false;
 // A mapping from category ID to a Material icon for that category.
 export const CATEGORY_ICON_NAMES: { [key: string]: string } = {
   '13578153291293': 'home',
+  '13578162616093': 'home',
 };
 
 // A mapping from section ID to a Material icon for that section.
@@ -45,8 +46,8 @@ export const CATEGORIES_TO_HIDE: number[] = [13578162616093, 13578145726749];
 // Keep in sync with locales configured in /next.config.js.
 export const DYNAMIC_CONTENT_LOCALES: { [key: string]: number } = {
   'en-us': 1, // English locale id
-  'hi-in': 1474,
-  kn: 1380,
+  ki: 1474, // kanuri
+  ha: 1380, // hausa
 };
 
 export const ZENDESK_AUTH_HEADER = {

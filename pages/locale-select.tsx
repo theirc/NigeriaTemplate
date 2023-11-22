@@ -13,14 +13,6 @@ const langs: Lang[] = [
     langShort: 'en-us',
     langLong: 'English',
   },
-  {
-    langShort: 'hi-in',
-    langLong: 'Hindi',
-  },
-  {
-    langShort: 'kn',
-    langLong: 'Kannada',
-  },
 ];
 
 /** The locale selection page.

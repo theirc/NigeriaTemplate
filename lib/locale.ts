@@ -13,22 +13,12 @@ export const LOCALES: { [key: string]: Locale } = {
     name: 'English',
     directus: 'en-US',
   },
-  'hi-in': {
-    url: 'hi-in',
-    direction: 'ltr',
-    name: 'Hindi',
-    directus: 'KAU',
-  },
-  kn: { url: 'kn', direction: 'ltr', name: 'Kannada', directus: 'ha-HA' },
 };
 
 export const LOCALE_CODES_TO_CANONICAL_LOCALE_CODES: { [key: string]: string } =
   {
     en: 'en-us',
     'en-us': 'en-us',
-    hi: 'hi-in',
-    'hi-in': 'hi-in',
-    kn: 'kn',
   };
 
 // Returns the effective locale given locale code.
