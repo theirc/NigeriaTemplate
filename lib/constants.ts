@@ -3,10 +3,8 @@ import { LatLngExpression } from 'leaflet';
 
 export const SITE_TITLE = 'Gidan Bayani';
 
-// TODO: add the country id of the instance to fetch the data from the cms for the service-map;
 export const COUNTRY_ID = 123;
 
-// TODO: add the default coords for the center of the map
 export const MAP_DEFAULT_COORDS: LatLngExpression = [9.082, 8.6753];
 
 // Cache statically generated pages for 1 hour. The timeout was chosen
@@ -16,14 +14,12 @@ export const REVALIDATION_TIMEOUT_SECONDS: number = 1 * 60 * 60;
 
 // The "about us" article ID.
 //
-// TODO
 export const ABOUT_US_ARTICLE_ID: number = 13578602268317;
 
 // The information hierary of the website.
 // Set to true for the category -> section -> article hierarchy, similar to that of United for Ukraine.
 // Set to false for the "information" -> category -> article hierarchy, similar to that of Beporsed.
 //
-// TODO
 export const USE_CAT_SEC_ART_CONTENT_STRUCTURE = false;
 
 // A mapping from category ID to a Material icon for that category.
