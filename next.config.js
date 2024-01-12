@@ -43,7 +43,7 @@ module.exports = withLess({
       // https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
       modifyVars: {
         'primary-color': '#242629',
-        'secondary-color': '#38393C',
+        'secondary-color': '#242629',
         'accent-color': '#F3AE3D',
         'info-color': '@accent-color',
         'alert-info-bg-color': '@accent-color',
