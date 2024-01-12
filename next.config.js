@@ -42,8 +42,8 @@ module.exports = withLess({
       // See full list of Ant styles here:
       // https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
       modifyVars: {
-        'primary-color': '#8b8f98',
-        'secondary-color': '#A6A9B0',
+        'primary-color': '#6884FC',
+        'secondary-color': '#92A2E5',
         'accent-color': '#F3AE3D',
         'info-color': '@accent-color',
         'alert-info-bg-color': '@accent-color',
