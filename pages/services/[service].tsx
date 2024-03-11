@@ -22,6 +22,7 @@ import {
   getCategoriesWithSections,
   getTranslationsFromDynamicContent,
 } from '@ircsignpost/signpost-base/dist/src/zendesk';
+import algoliasearch from 'algoliasearch/lite';
 import { GetStaticProps } from 'next';
 import getConfig from 'next/config';
 import { useRouter } from 'next/router';
@@ -29,6 +30,10 @@ import React from 'react';
 
 import {
   ABOUT_US_ARTICLE_ID,
+  ALGOLIA_ARTICLE_INDEX_NAME,
+  ALGOLIA_QUERY_INDEX_NAME,
+  ALGOLIA_SEARCH_API_KEY_WRITE,
+  ALGOLIA_SEARCH_APP_ID,
   CATEGORIES_TO_HIDE,
   CATEGORY_ICON_NAMES,
   DIRECTUS_AUTH_TOKEN,
@@ -160,7 +165,7 @@ async function getStaticParams() {
 
   const servicesFiltered = services?.filter((service) => {
     const translation = service.translations.find((translation) =>
-      allowedLanguageCodes.includes(translation.languages_id.code)
+      allowedLanguageCodes.includes(translation.languages_id?.code)
     );
     return translation;
   });
@@ -168,7 +173,7 @@ async function getStaticParams() {
   return servicesFiltered.flatMap((service) =>
     service?.translations?.map((translation) => {
       const locale = Object.values(LOCALES).find(
-        (x) => x.directus === translation.languages_id.code
+        (x) => x.directus === translation.languages_id?.code
       );
 
       return {
@@ -263,7 +268,7 @@ export const getStaticProps: GetStaticProps = async ({
   const service = await getDirectusArticle(Number(params?.service), directus);
 
   const serviceTranslated = service.translations.filter(
-    (x) => x.languages_id.code === currentLocale.directus
+    (x) => x.languages_id?.code === currentLocale.directus
   );
 
   service.translations = serviceTranslated;
@@ -304,6 +309,53 @@ export const getStaticProps: GetStaticProps = async ({
         };
   }
 
+  if (service) {
+    const body_safe = stripHtmlTags(service.description || '');
+    const title = service.name || '';
+    const query = title;
+    const id = service.id;
+    const locale = currentLocale;
+    const updated_at_iso = service.date_updated;
+    const translations = service.translations;
+    const category = { id: '1', title: 'Services' };
+    try {
+      const client = algoliasearch(
+        ALGOLIA_SEARCH_APP_ID,
+        ALGOLIA_SEARCH_API_KEY_WRITE
+      );
+      const record = {
+        objectID: id,
+        id,
+        title,
+        body_safe,
+        locale,
+        category,
+        updated_at_iso,
+        translations,
+      };
+      const index: any = client.initIndex(ALGOLIA_ARTICLE_INDEX_NAME);
+      await index.saveObject(record);
+      const indexquery: any = client.initIndex(ALGOLIA_QUERY_INDEX_NAME);
+      await indexquery.saveObject({
+        objectID: id,
+        id,
+        title,
+        body_safe,
+        locale,
+        category,
+        updated_at_iso,
+        translations,
+        query,
+      });
+    } catch (error) {
+      console.error(
+        `Error creating algolia index: ${
+          JSON.stringify(error) ?? 'Uknown error'
+        }`
+      );
+    }
+  }
+
   service.description = serviceTranslated[0].description;
   service.name = serviceTranslated[0].name;
 
@@ -328,3 +380,9 @@ export const getStaticProps: GetStaticProps = async ({
     revalidate: REVALIDATION_TIMEOUT_SECONDS,
   };
 };
+
+function stripHtmlTags(html: string): string {
+  const regex =
+    /<[^>]*>|&[^;]+;|<img\s+.*?>|<span\s+style="[^"]*">.*?<\/span>|&[A-Za-z]+;/g;
+  return html.replace(regex, '');
+}
