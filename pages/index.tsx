@@ -243,11 +243,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       } as DirectusServiceCategory;
     });
 
-  const uniqueProvidersIdsSet = new Set(services.flatMap((x) => x.provider.id));
-  const uniqueProvidersIdsArray = Array.from(uniqueProvidersIdsSet);
-
-  const serviceTypes = await getDirectusServiceCategories(directus);
-
   const providersArray = await getDirectusProviders(
     directus,
     DIRECTUS_COUNTRY_ID
