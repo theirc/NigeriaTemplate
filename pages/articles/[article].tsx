@@ -11,8 +11,15 @@ import Footer from '@ircsignpost/signpost-base/dist/src/footer';
 import { MenuOverlayItem } from '@ircsignpost/signpost-base/dist/src/menu-overlay';
 import { createDefaultSearchBarProps } from '@ircsignpost/signpost-base/dist/src/search-bar';
 import {
+  Attachment,
   CategoryWithSections,
   ZendeskCategory,
+  fetchArticleAttachments,
+  getArticle,
+  getArticles,
+  getCategories,
+  getCategoriesWithSections,
+  getTranslationsFromDynamicContent,
 } from '@ircsignpost/signpost-base/dist/src/zendesk';
 import { GetStaticProps } from 'next';
 import getConfig from 'next/config';
@@ -49,14 +56,6 @@ import {
   populateMenuOverlayStrings,
 } from '../../lib/translations';
 import { getSiteUrl, getZendeskMappedUrl, getZendeskUrl } from '../../lib/url';
-// TODO Use real Zendesk API implemetation.
-import {
-  getArticle,
-  getArticles,
-  getCategories,
-  getCategoriesWithSections,
-  getTranslationsFromDynamicContent,
-} from '../../lib/zendesk-fake';
 
 interface ArticleProps {
   pageTitle: string;
@@ -70,6 +69,7 @@ interface ArticleProps {
   pageUnderConstruction?: boolean;
   preview: boolean;
   strings: ArticlePageStrings;
+  attachments?: Attachment[];
   // A list of |MenuOverlayItem|s to be displayed in the header and side menu.
   menuOverlayItems: MenuOverlayItem[];
   footerLinks?: MenuOverlayItem[];
@@ -87,6 +87,7 @@ export default function Article({
   pageUnderConstruction,
   preview,
   strings,
+  attachments,
   menuOverlayItems,
   footerLinks,
 }: ArticleProps) {
@@ -146,6 +147,7 @@ export default function Article({
             locale: locale,
           },
           strings: strings.articleContentStrings,
+          attachments,
           previosURL: breadcrumbs,
         }}
       />
@@ -196,6 +198,8 @@ export const getStaticProps: GetStaticProps = async ({
   locale,
   preview,
 }) => {
+  const articleId = Number(params?.article);
+
   const currentLocale = getLocaleFromCode(locale ?? '');
   let dynamicContent = await getTranslationsFromDynamicContent(
     getZendeskLocaleId(currentLocale),
@@ -255,6 +259,13 @@ export const getStaticProps: GetStaticProps = async ({
     preview ?? false
   );
 
+  const attachments = await fetchArticleAttachments(articleId, getZendeskUrl());
+
+  const articleWithAttachments = {
+    ...article,
+    attachments,
+  };
+
   // If article does not exist, return an error.
   if (!article) {
     const errorProps = await getErrorResponseProps(
@@ -301,6 +312,7 @@ export const getStaticProps: GetStaticProps = async ({
       articleTitle: article.title,
       articleId: article.id,
       articleContent: content,
+      attachments: articleWithAttachments.attachments,
       metaTagAttributes,
       siteUrl: getSiteUrl(),
       lastEditedValue: article.edited_at,
